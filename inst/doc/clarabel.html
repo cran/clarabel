@@ -340,11 +340,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(clarabel)</span></code></pre></div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>These examples are from the original <a href="https://github.com/oxfordcontrol/ClarabelDocs">Clarabel
-documentation</a>.</p>
+<p>The first two examples are from the original <a href="https://github.com/oxfordcontrol/ClarabelDocs">Clarabel
+documentation</a> and the third is from <a href="https://www.cvxgrp.org/scs/">SCS</a>.</p>
 </div>
 <div id="basic-quadratic-program-example" class="section level2">
 <h2>1. Basic Quadratic Program Example</h2>
@@ -394,21 +393,21 @@ so.</p>
 </div>
 <div id="solution" class="section level3">
 <h3>1.3. Solution</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>)  <span class="co"># P needs to be a symmetric matrix</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">4</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">z =</span> 1L, <span class="at">l =</span> 4L)  <span class="do">## 1 equality and 4 inequalities, in order</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones)</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (2, Solver terminated with a solution.)</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution: (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; Solution: (x1, x2) = (0.428571, 0.214286)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>)  <span class="co"># P needs to be a symmetric matrix</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">4</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">z =</span> 1L, <span class="at">l =</span> 4L)  <span class="do">## 1 equality and 4 inequalities, in order</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (2, Solver terminated with a solution.)</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution: (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; Solution: (x1, x2) = (0.428571, 0.214286)</span></span></code></pre></div>
 </div>
-<div id="basic-socp-example" class="section level3">
-<h3>2. Basic SOCP Example</h3>
+<div id="basic-second-order-cone-programming-example" class="section level3">
+<h3>2. Basic Second-order Cone Programming Example</h3>
 <p>We want to solve the following 2-dimensional optimization
 problem:</p>
 <p><span class="math display">\[
@@ -447,39 +446,233 @@ constraint on the 2-norm of a vector, so we rewrite</p>
 </div>
 <div id="solution-1" class="section level3">
 <h3>2.3. Solution</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>) <span class="co"># P needs to be a symmetric matrix</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">q =</span> 3L)</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones)</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (2, Solver terminated with a solution.)</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2) = (1.000000, -1.000000)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>) <span class="co"># P needs to be a symmetric matrix</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">q =</span> 3L)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones)</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (2, Solver terminated with a solution.)</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2) = (1.000000, -1.000000)</span></span></code></pre></div>
+</div>
+</div>
+<div id="semidefinite-cone-programming-example" class="section level2">
+<h2>3. Semidefinite Cone Programming Example</h2>
+<p>Semidefinite cones have to be specified in a particular form. We
+borrow from the <a href="https://www.cvxgrp.org/scs/api/cones.html#sdcone">documentation
+for the SCS solver</a> which has similar calling conventions.</p>
+<p>The symmetric positive semidefinite cone of matrices is the set</p>
+<p><span class="math display">\[
+\{S \in \mathbf{R}^{k \times k} \mid  S = S^\top,  x^\top S x \geq 0 \
+\forall x \in \mathbb{R}^k \}
+\]</span></p>
+<p>and for short, we use <span class="math inline">\(S \succeq
+0\)</span> to denote membership. Clarabel vectorizes this cone in a
+special way which we detail here.</p>
+<p>Clarabel assumes that the input data corresponding to semidefinite
+cones have been vectorized by scaling the off-diagonal entries by <span class="math inline">\(\sqrt{2}\)</span> and stacking the upper
+triangular elements column-wise. (<a href="https://www.cvxgrp.org/scs/index.html">SCS</a> uses the lower
+triangular elements.) For a <span class="math inline">\(k \times
+k\)</span> matrix variable (or data matrix) this operation would create
+a vector of length <span class="math inline">\(k(k+1)/2\)</span>.
+Scaling by <span class="math inline">\(\sqrt{2}\)</span> is required to
+preserve the inner-product.</p>
+<p><em>This must be done for the rows of both <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span> that correspond to semidefinite cones
+and must be done independently for each semidefinite cone.</em></p>
+<p>More explicitly, we want to express <span class="math inline">\(\text{Trace}(Y S)\)</span> as <span class="math inline">\(\text{vec}(Y)^\top \text{vec}(S)\)</span>, where
+the <span class="math inline">\(\text{vec}\)</span> operation takes the
+(assumed to be symmetric) <span class="math inline">\(k \times
+k\)</span> matrix</p>
+<p><span class="math display">\[
+\begin{aligned}
+S =  \begin{bmatrix}
+        S_{11} &amp; S_{12} &amp; \ldots &amp; S_{1k}  \\
+        S_{21} &amp; S_{22} &amp; \ldots &amp; S_{2k}  \\
+        \vdots &amp; \vdots &amp; \ddots &amp; \vdots  \\
+        S_{k1} &amp; S_{k2} &amp; \ldots &amp; S_{kk}  \\
+      \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>and produces a vector consisting of the upper triangular elements
+scaled and arranged as</p>
+<p><span class="math display">\[
+\text{vec}(S) = (S_{11}, \sqrt{2} S_{12}, S_{22}, \sqrt{2}S_{13},
+\ldots, \sqrt{2}
+S_{1k}, \sqrt{2}S_{2k}, \sqrt{2}S_{3k}, \dots, \sqrt{2}S_{k-1,k},
+S_{kk}) \in
+\mathbb{R}^{k(k+1)/2}.
+\]</span></p>
+<p>To recover the matrix solution this operation must be inverted on the
+components of the vectors returned by Clarabel corresponding to each
+semidefinite cone. That is, the off-diagonal entries must be scaled by
+<span class="math inline">\(1/\sqrt{2}\)</span> and the upper triangular
+entries are filled in by copying the values of lower triangular entries.
+Explicitly, the inverse operation takes vector <span class="math inline">\(s \in \mathbb{R}^{k(k+1)/2}\)</span> and produces
+the matrix</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{mat}(s) =  \begin{bmatrix}
+s_{1} &amp; s_{2} / \sqrt{2} &amp; \ldots &amp; s_{k(k-1)/2-1} /
+\sqrt{2}  \\
+s_{2} / \sqrt{2} &amp; s_{3} &amp; \ldots &amp; s_{k(k-1)/2} /
+\sqrt{2}  \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots  \\
+s_{k(k-1)/2-1} / \sqrt{2} &amp; s_{k(k-1)/2} / \sqrt{2} &amp; \ldots
+&amp; s_{k(k+1) / 2}  \\
+\end{bmatrix}
+\in \mathbb{R}^{k \times k}.
+\end{aligned}
+\]</span></p>
+<p>So the cone definition that Clarabel uses is</p>
+<p><span class="math display">\[
+\mathcal{S}_+^k = \{ \text{vec}(S) \mid S \succeq 0\} = \{s \in
+\mathbb{R}^{k(k+1)/2} \mid \text{mat}(s) \succeq 0 \}.
+\]</span></p>
+<p>Below are two functions to implement both <span class="math inline">\(\text{vec}\)</span> and <span class="math inline">\(\text{mat}\)</span>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&#39; Return an vectorization of symmetric matrix using the upper triangular part,</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&#39; still in column order.</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&#39; @param S a symmetric matrix</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&#39; @return vector of values</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="cf">function</span>(S) {</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(S)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  sqrt2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fl">2.0</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  upper_tri <span class="ot">&lt;-</span> <span class="fu">upper.tri</span>(S, <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  S[upper_tri] <span class="ot">&lt;-</span> S[upper_tri] <span class="sc">*</span> sqrt2</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  S[<span class="fu">upper.tri</span>(S, <span class="at">diag =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>}</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&#39; Return the symmetric matrix from the [vec] vectorization</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&#39; @param v a vector</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&#39; @return a symmetric matrix</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>  n <span class="ot">&lt;-</span> (<span class="fu">sqrt</span>(<span class="dv">8</span> <span class="sc">*</span> <span class="fu">length</span>(v) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  sqrt2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fl">2.0</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>  S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, n, n)</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>  upper_tri <span class="ot">&lt;-</span> <span class="fu">upper.tri</span>(S, <span class="at">diag =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>  S[upper_tri] <span class="ot">&lt;-</span> v <span class="sc">/</span> sqrt2</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>  S <span class="ot">&lt;-</span> S <span class="sc">+</span> <span class="fu">t</span>(S)</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>  <span class="fu">diag</span>(S) <span class="ot">&lt;-</span> <span class="fu">diag</span>(S) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>  S</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>}</span></code></pre></div>
+<div id="example" class="section level3">
+<h3>3.1. Example</h3>
+<p>Consider the problem:</p>
+<p><span class="math display">\[
+\begin{array}{ll} \text{minimize} &amp;  x_1 - x_2 + x_3\\
+\text{subject to} &amp; B_1 - A_{11}x_1 - A_{12}x_2 - A_{13}x_3 \succeq
+0\\
+                  &amp; B_2 - A_{21}x_1 - A_{22}x_2 - A_{23}x_3 \succeq
+0
+\end{array}
+\]</span> where <span class="math display">\[
+A_{11}=\begin{bmatrix} -7 &amp; -11 \\ -11 &amp; 3\end{bmatrix}\mbox{, }
+A_{12}=\begin{bmatrix} 7 &amp; -18 \\ -18 &amp; 8\end{bmatrix}\mbox{, }
+A_{13}=\begin{bmatrix} -2 &amp; -8 \\ -8 &amp; 1\end{bmatrix},
+\]</span></p>
+<p><span class="math display">\[
+A_{21}=\begin{bmatrix} -21 &amp; -11 &amp; 0\\ -11 &amp; 10 &amp; 8\\ 0
+&amp; 8 &amp;
+5\end{bmatrix}\mbox{, }
+A_{22}=\begin{bmatrix} 0 &amp; 10 &amp; 16\\ 10 &amp; -10 &amp; -10\\ 16
+&amp; -10 &amp;
+3\end{bmatrix}\mbox{, }
+A_{23}=\begin{bmatrix} -5 &amp; 2 &amp; -17\\ 2 &amp; -6 &amp; 8\\ -17
+&amp; 8 &amp;
+6\end{bmatrix},
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+B_1=\begin{bmatrix} 33 &amp; -9 \\ -9 &amp; 26\end{bmatrix}\mbox{, }
+B_2=\begin{bmatrix} 14 &amp; 9 &amp; 40\\ 9 &amp; 91 &amp; 10\\ 40 &amp;
+10 &amp;
+15\end{bmatrix}.
+\]</span></p>
+<p>The constraints involve symmetric positive semidefinite cones over
+variables <span class="math inline">\(x \in \mathbb{R}^n\)</span> and
+<span class="math inline">\(S \in \mathbb{R}^{k \times k}\)</span></p>
+<p><span class="math display">\[
+B - \sum_{i=1}^n \mathcal{A}_i x_i = S \succeq 0
+\]</span></p>
+<p>where data <span class="math inline">\(B, \mathcal{A}_1, \ldots,
+\mathcal{A}_n \in \mathbb{R}^{k \times k}\)</span> are symmetric. We can
+write this in the canonical form over a new variable <span class="math inline">\(s \in \mathcal{S}_+^k\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\begin{align}
+s &amp;= \text{vec}(S)\\
+&amp;= \text{vec}(B - \sum_{i=1}^n \mathcal{A}_i x_i) \\
+&amp;= \text{vec}(B) - \sum_{i=1}^n \text{vec}(\mathcal{A}_i) x_i \\
+&amp;= b - Ax
+\end{align}
+\end{aligned}
+\]</span></p>
+<p>using the fact that <span class="math inline">\(\text{vec}\)</span>
+is linear, where <span class="math inline">\(b = \text{vec}(B)\)</span>
+and</p>
+<p><span class="math display">\[
+A =
+\begin{bmatrix}
+\text{vec}(\mathcal{A}_1) &amp; \text{vec}(\mathcal{A}_2) &amp; \cdots
+&amp; \text{vec}(\mathcal{A}_n)
+\end{bmatrix}
+\]</span></p>
+<p>i.e., the vectors <span class="math inline">\(\text{vec}(\mathcal{A}_i)\)</span> stacked
+columnwise. This is in a form that we can input into Clarabel. To
+recover the matrix solution from the optimal solution returned by
+Clarabel, we simply use <span class="math inline">\(S^\star =
+\text{mat}(s^\star)\)</span>.</p>
+<p>We have two such constraints and will therefore construct the vectors
+for both cones in order and specify the appropriate dimensions, 2 and 3,
+respectively.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># objective: x_1 - x2 + x_3</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>A11 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>A12 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">7</span>, <span class="sc">-</span><span class="dv">18</span>, <span class="sc">-</span><span class="dv">18</span>, <span class="dv">8</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>A13 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>A21 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">21</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">8</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>A22 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">16</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">16</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>A23 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">17</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="dv">8</span>, <span class="sc">-</span><span class="dv">17</span>, <span class="dv">8</span>, <span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>B1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">33</span>, <span class="sc">-</span><span class="dv">9</span>, <span class="sc">-</span><span class="dv">9</span>, <span class="dv">26</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>B2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">9</span>, <span class="dv">40</span>, <span class="dv">9</span>, <span class="dv">91</span>, <span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">10</span>, <span class="dv">15</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">vec</span>(A11), <span class="fu">vec</span>(A12), <span class="fu">vec</span>(A13)), <span class="co"># first psd constraint</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">vec</span>(A21), <span class="fu">vec</span>(A22), <span class="fu">vec</span>(A23))  <span class="co"># second psd constraint</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>)</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">vec</span>(B1), <span class="fu">vec</span>(B2)) <span class="co"># stack both psd constraints</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">s =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)) <span class="co"># cone dimensions</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">cone =</span> cones)</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (2, Solver terminated with a solution.)</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2, x3) = (%f, %f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>], s<span class="sc">$</span>x[<span class="dv">3</span>]))</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2, x3) = (-0.367752, 1.898333, -0.887460)</span></span></code></pre></div>
 </div>
 </div>
 <div id="control-parameters" class="section level2">
-<h2>3. Control parameters</h2>
+<h2>4. Control parameters</h2>
 <p>Clarabel has a number of parameters that control its behavior,
 including verbosity, time limits, and tolerances; see help on
 <code>clarabel_control()</code>. As an example, in the last problem, we
 can reduce the number of iterations.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>) <span class="co"># P needs to be a symmetric matrix</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">q =</span> 3L)</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones,</span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>              <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_iter =</span> <span class="dv">3</span>)) <span class="do">## Reduced number of iterations</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (5, Solver terminated with a solution (reduced accuracy))</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2) = (1.000000, -0.999999)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>) <span class="co"># P needs to be a symmetric matrix</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">q =</span> 3L)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>              <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_iter =</span> <span class="dv">3</span>)) <span class="do">## Reduced number of iterations</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (5, Solver terminated with a solution (reduced accuracy))</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2) = (1.000000, -0.999998)</span></span></code></pre></div>
 <p>Note the different status, which should always be checked in
 code.</p>
 </div>

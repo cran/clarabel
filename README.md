@@ -1,5 +1,6 @@
 # clarabel <img src="man/figures/logo.png" width="100" align="right" />
 
+[![R-CMD-check](https://github.com/oxfordcontrol/clarabel-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxfordcontrol/clarabel-r/actions/workflows/R-CMD-check.yaml)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/clarabel)](https://cran.r-project.org/package=clarabel)
 
 R interface to the
@@ -21,6 +22,7 @@ remotes::install_github("oxfordcontrol/clarabel-r")
 The above code assumes availability of the Cargo/Rust infrastructure
 and R compilation tools to install from source, all freely available.
 
-Vignettes are provided and may be perused at the [clarabel package
-site](https://oxfordcontrol.github.io/clarabel-r/articles/clarabel.html).
+The [clarabel package
+site](https://oxfordcontrol.github.io/clarabel-r/articles/clarabel.html)
+has further package details including a vignette.
 
