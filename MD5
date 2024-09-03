@@ -1,7 +1,7 @@
-c180639471dd6ca8d741f0dde9428a80 *DESCRIPTION
+8b9deba5d965bf8819a54616ff9ccb4c *DESCRIPTION
 b5b248145b1f20797e6a90b3a72d7a08 *LICENSE.note
 a8cfd610a3c29f5e100d615ca93cf433 *NAMESPACE
-fc59cdca2d392b61dffde49b99913bb7 *NEWS.md
+6b4cdd6e4950d6d1deb1beea9f1fd112 *NEWS.md
 5a04b5ab43d1c062ca31826417e12d45 *R/000-wrappers.R
 e90e29ae6e7d2d95e581117828a27787 *R/clarabel-package.R
 87d0b30caf697f94cc4e7fad8b331a8a *R/clarabel.R
@@ -13,7 +13,7 @@ f92d29c934d2e5c07b69373ba9b62be8 *inst/AUTHORS
 273a89005d1d67e052d993594c16c42c *inst/CITATION
 76879acd6e3b871fa7d09aa61d606a5c *inst/doc/clarabel.R
 af7c7c88f1f694ff19ac9273f3d82d24 *inst/doc/clarabel.Rmd
-76a5add9fa65386b9fbda6d94120bc37 *inst/doc/clarabel.html
+c40772ee7f0433703b358911e2cea014 *inst/doc/clarabel.html
 dc9b28d83c2371802365321dbf1edab9 *inst/misc/clarabel_logo.png
 eb91353f82fd7c03c27b7956ce51727b *inst/misc/code_gen.R
 d85aaa7b77036b5f2e9ae656aa909654 *inst/misc/hexpic.R
@@ -35,8 +35,8 @@ a3d38f34eaef995813ad3726a3a63775 *man/clarabel.Rd
 10587ee6fb8607e8dd45a3b5aec16a49 *man/clarabel_control.Rd
 9ce1b97fd4ee672074a9222664f3bed4 *man/figures/logo.png
 0a3c0c0466fd434b2afc378ed37b4a3a *man/solver_status_descriptions.Rd
-a5b9368ae5c9ba8802e6c74cc2993d24 *src/Makevars.in
-cf89d0e2450998074ac4f7c2adcd5f74 *src/Makevars.win
+35f0b8800a8e4c836267102e46d564ef *src/Makevars.in
+670038814da2f7c7bb00e1247220813d *src/Makevars.win
 37673070f5508de7bedd5bb2ae8125dc *src/clarabel-win.def
 ddec7e50e362cddb2ffe4f80a613f488 *src/init.c
 d0b2bdd1c8914b54ad5eab9fa5c372a2 *src/rust/Cargo.toml
