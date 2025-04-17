@@ -1,4 +1,4 @@
-b03037842f65cebb9a5edd347afe365d *DESCRIPTION
+130f7b1bf4367ba3637942ea4849fc8c *DESCRIPTION
 b5b248145b1f20797e6a90b3a72d7a08 *LICENSE.note
 a8cfd610a3c29f5e100d615ca93cf433 *NAMESPACE
 a51cd0abe3d42651c2481f932c55bf2f *NEWS.md
@@ -7,7 +7,7 @@ e90e29ae6e7d2d95e581117828a27787 *R/clarabel-package.R
 d00033ee33d6aafeedc1eea7196ad5fe *R/clarabel.R
 4a8156f283742ef7b34a60772588e017 *R/sparse.R
 f85434495165aa80afb2f5b32a09a51d *README.md
-867040583e47e5969ed65bd4729778ee *build/vignette.rds
+850ea2d00a024a9d7471c769f3a38d3a *build/vignette.rds
 a4f859a915ff6a4c3800db620241c9d8 *configure
 dee071108072908056daea908a140327 *configure.win
 f92d29c934d2e5c07b69373ba9b62be8 *inst/AUTHORS
@@ -36,16 +36,16 @@ a3d38f34eaef995813ad3726a3a63775 *man/clarabel.Rd
 08d570c1934a0939444574d4b12a9aaf *man/clarabel_control.Rd
 9ce1b97fd4ee672074a9222664f3bed4 *man/figures/logo.png
 0a3c0c0466fd434b2afc378ed37b4a3a *man/solver_status_descriptions.Rd
-ffcca032a2367c65257e69c444d6ac27 *src/Makevars.in
-7e7c118d16ede938fcd9ec5a81707741 *src/Makevars.win
+a41f13fded89d37330eb6939b420e46c *src/Makevars.in
+5ba4f751d39e834dc9c1638ed2447ccc *src/Makevars.win
 37673070f5508de7bedd5bb2ae8125dc *src/clarabel-win.def
 ddec7e50e362cddb2ffe4f80a613f488 *src/init.c
-0af1a106f8f828abae62d763493d1839 *src/rust/Cargo.lock
-a298f027996459dd17da055b717b8944 *src/rust/Cargo.toml
+11f4b5996bbd55cb8e31990e9389e81f *src/rust/Cargo.lock
+d94ecc8d31bd2686ee5cf720fcf8eb0f *src/rust/Cargo.toml
 9b4aef36af08f8cd384d7fd28b697750 *src/rust/api.h
 18f8f375ab02285ea1d71a948394a1ac *src/rust/cargo_vendor_config.toml
 6941b3ccae6d6988407a7305e2bce524 *src/rust/src/lib.rs
-15e43e44a1406491d49eb908c512c1ef *src/rust/vendor.tar.xz
+b6613ee32e4c0085f8346876fe60e255 *src/rust/vendor.tar.xz
 a8a53169f1c85af9af11a448a9582974 *tests/tinytest.R
 4b7d2f97c407377684aa35d16aa025c0 *tools/msrv.R
 af7c7c88f1f694ff19ac9273f3d82d24 *vignettes/clarabel.Rmd
