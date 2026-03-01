@@ -658,8 +658,69 @@ respectively.</p>
 <span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2, x3) = (-0.367746, 1.898333, -0.887466)</span></span></code></pre></div>
 </div>
 </div>
+<div id="updating-problem-data-warm-starts" class="section level2">
+<h2>4. Updating Problem Data (Warm Starts)</h2>
+<p>When solving a sequence of related problems that share the same
+sparsity structure, it is more efficient to create a persistent solver
+and update only the data that changes between solves. This avoids
+rebuilding the solver’s internal data structures each time.</p>
+<p>To enable updates, certain settings must be disabled:
+<code>presolve_enable = FALSE</code>,
+<code>chordal_decomposition_enable = FALSE</code>, and
+<code>input_sparse_dropzeros = FALSE</code>. Use
+<code>solver_is_update_allowed()</code> to verify after
+construction.</p>
+<div id="example-sdp-with-a-changed-constraint" class="section level3">
+<h3>4.1. Example: SDP with a changed constraint</h3>
+<p>We revisit the semidefinite program from Section 3, but now suppose
+the constraint matrix <span class="math inline">\(B_1\)</span> changes
+from <span class="math inline">\(\begin{bmatrix} 33 &amp; -9 \\ -9 &amp;
+26 \end{bmatrix}\)</span> to <span class="math inline">\(\begin{bmatrix}
+40 &amp; -12 \\ -12 &amp; 30 \end{bmatrix}\)</span>.</p>
+<p>First, we set up and solve the original problem using a persistent
+solver.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>q_sdp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>A11 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>A12 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">7</span>, <span class="sc">-</span><span class="dv">18</span>, <span class="sc">-</span><span class="dv">18</span>, <span class="dv">8</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>A13 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>A21 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">21</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">8</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>A22 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">16</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">16</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>A23 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">17</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="dv">8</span>, <span class="sc">-</span><span class="dv">17</span>, <span class="dv">8</span>, <span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>B1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">33</span>, <span class="sc">-</span><span class="dv">9</span>, <span class="sc">-</span><span class="dv">9</span>, <span class="dv">26</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>B2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">9</span>, <span class="dv">40</span>, <span class="dv">9</span>, <span class="dv">91</span>, <span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">10</span>, <span class="dv">15</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>A_sdp <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">vec</span>(A11), <span class="fu">vec</span>(A12), <span class="fu">vec</span>(A13)),</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">vec</span>(A21), <span class="fu">vec</span>(A22), <span class="fu">vec</span>(A23))</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>)</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>b_sdp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">vec</span>(B1), <span class="fu">vec</span>(B2))</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>cones_sdp <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">s =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="do">## Create a persistent solver with updates enabled</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">clarabel_control</span>(<span class="at">presolve_enable =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>solver <span class="ot">&lt;-</span> <span class="fu">clarabel_solver</span>(<span class="at">A =</span> A_sdp, <span class="at">b =</span> b_sdp, <span class="at">q =</span> q_sdp, <span class="at">cones =</span> cones_sdp, <span class="at">control =</span> ctrl)</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="fu">solver_is_update_allowed</span>(solver)  <span class="co"># should be TRUE</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>sol1 <span class="ot">&lt;-</span> <span class="fu">solver_solve</span>(solver)</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Original solution (x1, x2, x3) = (%f, %f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>            sol1<span class="sc">$</span>x[<span class="dv">1</span>], sol1<span class="sc">$</span>x[<span class="dv">2</span>], sol1<span class="sc">$</span>x[<span class="dv">3</span>]))</span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; Original solution (x1, x2, x3) = (-0.367746, 1.898333, -0.887466)</span></span></code></pre></div>
+<p>Now update the constraint with the new <span class="math inline">\(B_1\)</span> and re-solve.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>B1_new <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">40</span>, <span class="sc">-</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">12</span>, <span class="dv">30</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>b_sdp_new <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">vec</span>(B1_new), <span class="fu">vec</span>(B2))  <span class="co"># only B1 changes</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">solver_update</span>(solver, <span class="at">b =</span> b_sdp_new)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>sol2 <span class="ot">&lt;-</span> <span class="fu">solver_solve</span>(solver)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Updated solution  (x1, x2, x3) = (%f, %f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>            sol2<span class="sc">$</span>x[<span class="dv">1</span>], sol2<span class="sc">$</span>x[<span class="dv">2</span>], sol2<span class="sc">$</span>x[<span class="dv">3</span>]))</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; Updated solution  (x1, x2, x3) = (-0.404810, 2.166303, -0.649288)</span></span></code></pre></div>
+<p>The solver reuses its internal factorization, making the second solve
+faster than constructing a new solver from scratch.</p>
+</div>
+</div>
 <div id="cone-specifications" class="section level2">
-<h2>4. Cone Specifications</h2>
+<h2>5. Cone Specifications</h2>
 <p>The following cones can be specified in Clarabel.</p>
 <table>
 <colgroup>
@@ -754,24 +815,24 @@ values, e.g. <code>5L</code> for integers, <code>0.</code> for reals
 etc.</p>
 </div>
 <div id="control-parameters" class="section level2">
-<h2>5. Control parameters</h2>
+<h2>6. Control parameters</h2>
 <p>Clarabel has a number of parameters that control its behavior,
 including verbosity, time limits, and tolerances; see help on
 <code>clarabel_control()</code>. As an example, in the last problem, we
 can reduce the number of iterations.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>) <span class="co"># P needs to be a symmetric matrix</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">q =</span> <span class="dv">3</span><span class="dt">L</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones,</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>              <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_iter =</span> <span class="dv">3</span>)) <span class="do">## Reduced number of iterations</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (5, Solver terminated with a solution (reduced accuracy))</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2) = (1.000000, -0.999998)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>P <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">as</span>(P, <span class="st">&quot;symmetricMatrix&quot;</span>) <span class="co"># P needs to be a symmetric matrix</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> Matrix<span class="sc">::</span><span class="fu">Matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>cones <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">q =</span> <span class="dv">3</span><span class="dt">L</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">clarabel</span>(<span class="at">A =</span> A, <span class="at">b =</span> b, <span class="at">q =</span> q, <span class="at">P =</span> P, <span class="at">cones =</span> cones,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>              <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_iter =</span> <span class="dv">3</span>)) <span class="do">## Reduced number of iterations</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution status, description: = (%d, %s)</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>            s<span class="sc">$</span>status, <span class="fu">solver_status_descriptions</span>()[s<span class="sc">$</span>status]))</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; Solution status, description: = (5, Solver terminated with a solution (reduced accuracy))</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Solution (x1, x2) = (%f, %f)</span><span class="sc">\n</span><span class="st">&quot;</span>, s<span class="sc">$</span>x[<span class="dv">1</span>], s<span class="sc">$</span>x[<span class="dv">2</span>]))</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; Solution (x1, x2) = (1.000000, -0.999998)</span></span></code></pre></div>
 <p>Note the different status, which should always be checked in
 code.</p>
 </div>

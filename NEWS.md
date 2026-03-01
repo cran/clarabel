@@ -1,3 +1,19 @@
+# clarabel 0.11.2
+
+- Added persistent solver API for warm starts: `clarabel_solver()`,
+  `solver_solve()`, `solver_update()`, `solver_is_update_allowed()`
+- Robustified Rust interface: type coercion, error handling,
+  CscMatrix validation, and regex ordering fixes
+- Switched all R-side error messaging to `cli::cli_abort()` with
+  markup
+- Upgraded `savvy` crate from 0.8.13 to 0.9.2
+- Added examples to `clarabel_control()` and solver functions
+- Added vignette section on updating problem data (warm starts)
+- Reduced CRAN test suite to LP and QP only; full suite runs locally
+  via `tinytest::at_home()`
+- Fixed macOS CRAN linker warning by forwarding `MACOSX_DEPLOYMENT_TARGET`
+  to Rust `cc` crate during `cargo build`
+
 # clarabel 0.11.1
 
 - Synced up to v0.11.1 of `Clarabel.rs`

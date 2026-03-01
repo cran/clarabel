@@ -1,7 +1,7 @@
 Package: clarabel
 Type: Package
 Title: Interior Point Conic Optimization Solver
-Version: 0.11.1
+Version: 0.11.2
 Authors@R: c(person("Balasubramanian", "Narasimhan", role = c("aut", "cre"),
 	   	   email = "naras@stanford.edu"),
 	     person("Paul", "Goulart", role = c("aut", "cph")),
@@ -22,9 +22,9 @@ Suggests: knitr, Matrix, rmarkdown, tinytest
 VignetteBuilder: knitr
 SystemRequirements: Cargo (Rust's package manager), rustc (>= 1.70.0),
         and GNU Make
-Imports: methods
+Imports: cli, methods
 NeedsCompilation: yes
-Packaged: 2025-09-23 18:57:37 UTC; naras
+Packaged: 2026-02-28 07:44:39 UTC; naras
 Author: Balasubramanian Narasimhan [aut, cre],
   Paul Goulart [aut, cph],
   Yuwen Chen [aut],
@@ -36,4 +36,4 @@ Author: Balasubramanian Narasimhan [aut, cre],
     for details)
 Maintainer: Balasubramanian Narasimhan <naras@stanford.edu>
 Repository: CRAN
-Date/Publication: 2025-09-24 05:11:14 UTC
+Date/Publication: 2026-03-01 06:10:52 UTC
